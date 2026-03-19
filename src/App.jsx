@@ -957,12 +957,6 @@ export default function App() {
                   </p>
                 </div>
 
-                <div className="relative z-10 rounded-[22px] border border-white/10 bg-black/20 p-4">
-                  <p className="text-[0.72rem] uppercase tracking-[0.22em] text-white/45">Designed for projection</p>
-                  <p className="mt-2 text-base leading-7 text-white/78">
-                    Every section keeps a slide-like 16:9 stage on desktop while remaining scrollable like a standard one-page site.
-                  </p>
-                </div>
               </div>
             </div>
           </div>
