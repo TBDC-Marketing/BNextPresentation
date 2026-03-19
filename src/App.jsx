@@ -400,7 +400,53 @@ function MetricCard({ metric, prefersReducedMotion }) {
   );
 }
 
-function NavigationControls({ sections, currentIndex, onNavigate, isOpen, onToggle }) {
+function ToggleSwitch({ enabled, onChange, label, id }) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      id={id}
+      aria-checked={enabled}
+      onClick={() => onChange(!enabled)}
+      className={cx(
+        'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200',
+        enabled ? 'bg-[var(--orange)]' : 'bg-white/15'
+      )}
+      aria-label={label}
+    >
+      <span
+        className={cx(
+          'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-200',
+          enabled ? 'translate-x-5' : 'translate-x-0'
+        )}
+      />
+    </button>
+  );
+}
+
+function FullscreenIcon({ isFullscreen }) {
+  return (
+    <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {isFullscreen ? (
+        <>
+          <path d="M6 2H2v4" />
+          <path d="M10 2h4v4" />
+          <path d="M6 14H2v-4" />
+          <path d="M10 14h4v-4" />
+        </>
+      ) : (
+        <>
+          <path d="M2 6V2h4" />
+          <path d="M14 6V2h-4" />
+          <path d="M2 10v4h4" />
+          <path d="M14 10v4h-4" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+function NavigationControls({ sections, currentIndex, onNavigate, isOpen, onToggle, arrowNavEnabled, onToggleArrowNav, isFullscreen, onToggleFullscreen }) {
   const current = sections[currentIndex];
 
   return (
@@ -458,6 +504,26 @@ function NavigationControls({ sections, currentIndex, onNavigate, isOpen, onTogg
               </button>
             </div>
 
+            <div className="mb-4 space-y-3 rounded-2xl border border-white/10 bg-white/5 p-3">
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-sm text-white/85">Arrow key navigation</p>
+                  <p className="mt-0.5 text-[0.62rem] text-white/40">Left / Right arrows move between sections</p>
+                </div>
+                <ToggleSwitch enabled={arrowNavEnabled} onChange={onToggleArrowNav} label="Arrow key navigation" id="arrow-nav-toggle" />
+              </div>
+
+              <button
+                type="button"
+                onClick={onToggleFullscreen}
+                className="nav-button w-full"
+                aria-pressed={isFullscreen}
+              >
+                <FullscreenIcon isFullscreen={isFullscreen} />
+                {isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+              </button>
+            </div>
+
             <div className="flex flex-wrap gap-1.5">
               {sections.map((section, index) => {
                 const state = index === currentIndex ? 'current' : index < currentIndex ? 'complete' : 'upcoming';
@@ -489,6 +555,7 @@ function NavigationControls({ sections, currentIndex, onNavigate, isOpen, onTogg
               <p className="font-display text-sm uppercase leading-none text-white">{current.nav}</p>
               <p className="mt-1 text-[0.62rem] uppercase tracking-[0.2em] text-white/45">
                 {String(currentIndex + 1).padStart(2, '0')}/{String(sections.length).padStart(2, '0')} &middot; N
+                {arrowNavEnabled && ' · Keys'}
               </p>
             </div>
           </button>
@@ -532,6 +599,8 @@ export default function App() {
   const sectionIds = useMemo(() => sectionMeta.map((section) => section.id), []);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [navOpen, setNavOpen] = useState(false);
+  const [arrowNavEnabled, setArrowNavEnabled] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const goToSection = (index) => {
     const safeIndex = Math.max(0, Math.min(index, sectionIds.length - 1));
@@ -543,6 +612,24 @@ export default function App() {
       behavior: prefersReducedMotion ? 'auto' : 'smooth',
       block: 'start',
     });
+  };
+
+  useEffect(() => {
+    const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch (err) {
+      console.error('Fullscreen toggle failed', err);
+    }
   };
 
   useEffect(() => {
@@ -624,6 +711,25 @@ export default function App() {
         return;
       }
 
+      if ((event.key === 'f' || event.key === 'F') && !isTextInput) {
+        event.preventDefault();
+        toggleFullscreen();
+        return;
+      }
+
+      if (arrowNavEnabled && !isTextInput && !event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey) {
+        if (event.key === 'ArrowRight' && currentIndex < sectionIds.length - 1) {
+          event.preventDefault();
+          goToSection(currentIndex + 1);
+          return;
+        }
+        if (event.key === 'ArrowLeft' && currentIndex > 0) {
+          event.preventDefault();
+          goToSection(currentIndex - 1);
+          return;
+        }
+      }
+
       const isInteractive = active?.closest?.('button, a, input, textarea, select');
       if (isInteractive) return;
 
@@ -648,11 +754,11 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, sectionIds.length, prefersReducedMotion, navOpen]);
+  }, [currentIndex, sectionIds.length, prefersReducedMotion, navOpen, arrowNavEnabled]);
 
   return (
     <div className={cx('page-shell pb-20 md:pb-0 transition-[padding] duration-300 ease-in-out', navOpen && 'md:pr-[21rem]')}>
-      <NavigationControls sections={sectionMeta} currentIndex={currentIndex} onNavigate={goToSection} isOpen={navOpen} onToggle={() => setNavOpen((v) => !v)} />
+      <NavigationControls sections={sectionMeta} currentIndex={currentIndex} onNavigate={goToSection} isOpen={navOpen} onToggle={() => setNavOpen((v) => !v)} arrowNavEnabled={arrowNavEnabled} onToggleArrowNav={setArrowNavEnabled} isFullscreen={isFullscreen} onToggleFullscreen={toggleFullscreen} />
 
       <main>
         {/* 1. Opening */}
