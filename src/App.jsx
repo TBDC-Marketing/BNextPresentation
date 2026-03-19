@@ -335,7 +335,7 @@ function QuoteBlock({ quote, attribution, role, compact = false }) {
       )}
     >
       <div className="font-display text-[3rem] leading-none text-[var(--yellow)]">&ldquo;</div>
-      <p className={cx('mt-3 leading-tight text-white', compact ? 'text-lg' : 'text-[clamp(1.45rem,2.3vw,2.4rem)]')}>
+      <p className={cx('mt-3 leading-tight text-white', compact ? 'text-[clamp(1.25rem,1.8vw,1.65rem)]' : 'text-[clamp(1.45rem,2.3vw,2.4rem)]')}>
         {quote}
       </p>
       <footer className="mt-6 border-t border-white/10 pt-4">
