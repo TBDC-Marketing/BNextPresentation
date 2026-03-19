@@ -760,24 +760,28 @@ export default function App() {
         {/* 1. Opening */}
         <SlideSection id="opening" mode="dark">
           <div className="flex h-full flex-col justify-between">
+            <div className="mb-6 flex flex-wrap items-center gap-6 md:gap-8">
+              <img src={`${import.meta.env.BASE_URL}BNextLogo.png`} alt="Brampton NEXT" className="h-10 md:h-12 w-auto object-contain" />
+              <img src={`${import.meta.env.BASE_URL}BHiveLogo.png`} alt="BHive" className="h-10 md:h-12 w-auto object-contain" />
+            </div>
             <div>
               <SectionRule label="BNext impact story" tone="dark" />
               <h1 className="max-w-5xl font-display text-[clamp(4rem,9vw,9rem)] uppercase leading-[0.9] tracking-[-0.03em] text-white">
                 From potential to traction
               </h1>
-              <p className="mt-6 max-w-3xl text-[clamp(1.15rem,1.5vw,1.4rem)] leading-8 text-white/75">
+              <p className="mt-8 max-w-4xl text-[clamp(1.25rem,2vw,1.75rem)] leading-9 text-white/75">
                 {anchorLine}
               </p>
             </div>
 
-            <div className="grid gap-3 pt-8 sm:grid-cols-3">
+            <div className="grid gap-4 pt-8 sm:grid-cols-3">
               {openingPillars.map((pillar) => (
                 <div
                   key={pillar.title}
-                  className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm"
+                  className="rounded-[22px] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm"
                 >
-                  <p className="font-display text-[1.5rem] uppercase leading-none text-[var(--yellow)]">{pillar.title}</p>
-                  <p className="mt-3 text-sm leading-6 text-white/72">{pillar.body}</p>
+                  <p className="font-display text-[clamp(1.5rem,2.5vw,2rem)] uppercase leading-none text-[var(--yellow)]">{pillar.title}</p>
+                  <p className="mt-4 text-[clamp(0.9rem,1.1vw,1.05rem)] leading-7 text-white/72">{pillar.body}</p>
                 </div>
               ))}
             </div>
@@ -1027,6 +1031,10 @@ export default function App() {
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-8">
               <div>
+                <div className="mb-6 flex flex-wrap items-center gap-6 md:gap-8">
+                  <img src={`${import.meta.env.BASE_URL}BNextLogo.png`} alt="Brampton NEXT" className="h-10 md:h-12 w-auto object-contain" />
+                  <img src={`${import.meta.env.BASE_URL}BHiveLogo.png`} alt="BHive" className="h-10 md:h-12 w-auto object-contain" />
+                </div>
                 <SectionRule label="Momentum and future potential" tone="dark" />
                 <h2 className="max-w-5xl font-display text-[clamp(3rem,6.5vw,7rem)] uppercase leading-[0.9] tracking-[-0.03em] text-white">
                   Access can change what happens next.
