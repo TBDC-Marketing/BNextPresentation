@@ -148,17 +148,21 @@ function SectionRule({ label, tone = 'dark' }) {
   );
 }
 
-function SlideSection({ id, mode = 'light', children }) {
+function SlideSection({ id, mode = 'light', layout = 'compact', children }) {
   return (
     <section id={id} tabIndex={-1} className="relative snap-start px-3 pb-24 pt-3 md:px-6 md:py-6 lg:px-8 lg:py-8">
-      <div className="mx-auto flex min-h-[calc(100vh-1.5rem)] max-w-[1680px] items-center justify-center">
+      <div className={cx(
+        'mx-auto max-w-[1680px]',
+        layout === 'compact' ? 'flex min-h-[calc(100vh-1.5rem)] items-center justify-center' : 'flex justify-center'
+      )}>
         <div
           className={cx(
-            'stage-frame stage-panel',
+            'stage-frame stage-panel flex flex-col',
+            layout === 'flow' && 'stage-frame--flow',
             mode === 'dark' ? 'stage-panel--dark text-white' : 'stage-panel--light text-[var(--navy)]'
           )}
         >
-          <div className="relative z-10 h-full p-6 md:p-10 lg:p-14">{children}</div>
+          <div className="relative z-10 flex-1 p-6 md:p-10 lg:p-14">{children}</div>
         </div>
       </div>
     </section>
@@ -204,7 +208,7 @@ function StoryVisual({ story }) {
 
 function StorySection({ story, reverse = false }) {
   return (
-    <SlideSection id={story.id} mode="dark">
+    <SlideSection id={story.id} mode="dark" layout="flow">
       <div className="grid h-full gap-6 md:grid-cols-12 md:gap-8">
         <div className={cx('md:col-span-5', reverse && 'md:order-2')}>
           <StoryVisual story={story} />
@@ -396,68 +400,99 @@ function MetricCard({ metric, prefersReducedMotion }) {
   );
 }
 
-function NavigationControls({ sections, currentIndex, onNavigate }) {
+function NavigationControls({ sections, currentIndex, onNavigate, isOpen, onToggle }) {
   const current = sections[currentIndex];
 
   return (
     <>
       <div className="pointer-events-none fixed bottom-6 right-6 z-50 hidden md:flex flex-col items-end gap-3">
-        <div className="pointer-events-auto w-[18rem] rounded-[24px] border border-white/10 bg-[rgba(5,5,5,0.76)] p-4 text-white shadow-glow backdrop-blur-xl">
-          <div className="mb-4 flex items-start justify-between gap-4">
-            <div className="min-w-0">
+        {isOpen ? (
+          <div className="pointer-events-auto w-[18rem] rounded-[24px] border border-white/10 bg-[rgba(5,5,5,0.76)] p-4 text-white shadow-glow backdrop-blur-xl">
+            <div className="mb-3 flex items-center justify-between">
               <p className="text-[0.65rem] uppercase tracking-[0.25em] text-white/45">Presenter controls</p>
-              <p className="mt-2 font-display text-[1.6rem] uppercase leading-none text-white">{current.nav}</p>
-              <p className="mt-1 text-sm text-white/65">{current.title}</p>
+              <button
+                type="button"
+                onClick={onToggle}
+                className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white/60 transition hover:bg-white/10 hover:text-white"
+                aria-label="Close navigation (Escape)"
+              >
+                <svg className="h-3.5 w-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
+                  <path d="M1 1l12 12M13 1L1 13" />
+                </svg>
+              </button>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-right">
-              <div className="text-[0.62rem] uppercase tracking-[0.24em] text-white/40">Section</div>
-              <div className="mt-1 font-display text-[1.7rem] leading-none text-[var(--yellow)]">
-                {String(currentIndex + 1).padStart(2, '0')}
-                <span className="text-white/25">/{String(sections.length).padStart(2, '0')}</span>
+            <div className="mb-4 flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <p className="font-display text-[1.6rem] uppercase leading-none text-white">{current.nav}</p>
+                <p className="mt-1 text-sm text-white/65">{current.title}</p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-right">
+                <div className="text-[0.62rem] uppercase tracking-[0.24em] text-white/40">Section</div>
+                <div className="mt-1 font-display text-[1.7rem] leading-none text-[var(--yellow)]">
+                  {String(currentIndex + 1).padStart(2, '0')}
+                  <span className="text-white/25">/{String(sections.length).padStart(2, '0')}</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="mb-4 grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              className="nav-button"
-              disabled={currentIndex === 0}
-              onClick={() => onNavigate(currentIndex - 1)}
-            >
-              <ArrowIcon direction="left" />
-              Prev
-            </button>
-            <button
-              type="button"
-              className="nav-button"
-              disabled={currentIndex === sections.length - 1}
-              onClick={() => onNavigate(currentIndex + 1)}
-            >
-              Next
-              <ArrowIcon direction="right" />
-            </button>
-          </div>
+            <div className="mb-4 grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                className="nav-button"
+                disabled={currentIndex === 0}
+                onClick={() => onNavigate(currentIndex - 1)}
+              >
+                <ArrowIcon direction="left" />
+                Prev
+              </button>
+              <button
+                type="button"
+                className="nav-button"
+                disabled={currentIndex === sections.length - 1}
+                onClick={() => onNavigate(currentIndex + 1)}
+              >
+                Next
+                <ArrowIcon direction="right" />
+              </button>
+            </div>
 
-          <div className="grid grid-cols-9 gap-1.5">
-            {sections.map((section, index) => {
-              const state = index === currentIndex ? 'current' : index < currentIndex ? 'complete' : 'upcoming';
-              return (
-                <button
-                  key={section.id}
-                  type="button"
-                  onClick={() => onNavigate(index)}
-                  className="group flex items-center justify-center rounded-lg p-1 transition hover:bg-white/5"
-                  aria-label={`Jump to ${section.nav}: ${section.title}`}
-                  title={`${section.nav}: ${section.title}`}
-                >
-                  <HexMarker state={state} />
-                </button>
-              );
-            })}
+            <div className="grid grid-cols-9 gap-1.5">
+              {sections.map((section, index) => {
+                const state = index === currentIndex ? 'current' : index < currentIndex ? 'complete' : 'upcoming';
+                return (
+                  <button
+                    key={section.id}
+                    type="button"
+                    onClick={() => onNavigate(index)}
+                    className="group flex items-center justify-center rounded-lg p-1 transition hover:bg-white/5"
+                    aria-label={`Jump to ${section.nav}: ${section.title}`}
+                    title={`${section.nav}: ${section.title}`}
+                  >
+                    <HexMarker state={state} />
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        ) : (
+          <button
+            type="button"
+            onClick={onToggle}
+            className="pointer-events-auto group flex items-center gap-3 rounded-2xl border border-white/10 bg-[rgba(5,5,5,0.76)] px-4 py-3 text-white shadow-glow backdrop-blur-xl transition hover:border-white/20"
+            aria-label="Open presenter navigation (N)"
+            title="Press N to toggle"
+          >
+            <HexMarker state="current" />
+            <div className="text-left">
+              <p className="font-display text-sm uppercase leading-none text-white">{current.nav}</p>
+              <p className="mt-1 text-[0.62rem] uppercase tracking-[0.2em] text-white/45">
+                {String(currentIndex + 1).padStart(2, '0')}/{String(sections.length).padStart(2, '0')} &middot; N
+              </p>
+            </div>
+          </button>
+        )}
       </div>
 
       <div className="fixed inset-x-0 bottom-0 z-50 md:hidden">
@@ -496,6 +531,7 @@ export default function App() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const sectionIds = useMemo(() => sectionMeta.map((section) => section.id), []);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [navOpen, setNavOpen] = useState(false);
 
   const goToSection = (index) => {
     const safeIndex = Math.max(0, Math.min(index, sectionIds.length - 1));
@@ -574,7 +610,20 @@ export default function App() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        if (navOpen) { setNavOpen(false); event.preventDefault(); }
+        return;
+      }
+
       const active = document.activeElement;
+      const isTextInput = active?.matches?.('input, textarea, [contenteditable="true"]');
+
+      if ((event.key === 'n' || event.key === 'N') && !isTextInput) {
+        event.preventDefault();
+        setNavOpen((v) => !v);
+        return;
+      }
+
       const isInteractive = active?.closest?.('button, a, input, textarea, select');
       if (isInteractive) return;
 
@@ -599,11 +648,11 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, sectionIds.length, prefersReducedMotion]);
+  }, [currentIndex, sectionIds.length, prefersReducedMotion, navOpen]);
 
   return (
-    <div className="page-shell pb-20 md:pb-0">
-      <NavigationControls sections={sectionMeta} currentIndex={currentIndex} onNavigate={goToSection} />
+    <div className={cx('page-shell pb-20 md:pb-0 transition-[padding] duration-300 ease-in-out', navOpen && 'md:pr-[21rem]')}>
+      <NavigationControls sections={sectionMeta} currentIndex={currentIndex} onNavigate={goToSection} isOpen={navOpen} onToggle={() => setNavOpen((v) => !v)} />
 
       <main>
         <SlideSection id="opening" mode="dark">
@@ -675,7 +724,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        <SlideSection id="access-gap" mode="light">
+        <SlideSection id="access-gap" mode="light" layout="flow">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="md:col-span-6">
               <SectionRule label="Program overview and purpose" tone="light" />
@@ -730,7 +779,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        <SlideSection id="ecosystem-role" mode="light">
+        <SlideSection id="ecosystem-role" mode="light" layout="flow">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-5">
               <div>
@@ -795,7 +844,7 @@ export default function App() {
 
         <StorySection story={stories[0]} />
 
-        <SlideSection id="mentor-network" mode="light">
+        <SlideSection id="mentor-network" mode="light" layout="flow">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-4">
               <div>
@@ -835,7 +884,7 @@ export default function App() {
 
         <StorySection story={stories[1]} reverse />
 
-        <SlideSection id="community-support" mode="light">
+        <SlideSection id="community-support" mode="light" layout="flow">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-6">
               <div>
@@ -872,7 +921,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        <SlideSection id="evidence-outcomes" mode="light">
+        <SlideSection id="evidence-outcomes" mode="light" layout="flow">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-4">
               <div>

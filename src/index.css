@@ -97,7 +97,11 @@ body::-webkit-scrollbar-thumb {
   }
 
   .stage-panel {
-    @apply relative overflow-hidden rounded-[32px] border;
+    @apply relative rounded-[32px] border;
+  }
+
+  .stage-frame--flow {
+    min-height: 0;
   }
 
   .stage-panel--dark {
@@ -138,9 +142,6 @@ body::-webkit-scrollbar-thumb {
 
 @media (min-width: 768px) {
   .stage-frame {
-    width: min(92vw, calc((100vh - 4rem) * 1.7777778), 1600px);
-    aspect-ratio: 16 / 9;
-    min-height: 0;
-    max-height: calc(100vh - 3rem);
+    width: min(92vw, 1600px);
   }
 }
