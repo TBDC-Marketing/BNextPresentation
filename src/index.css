@@ -67,7 +67,7 @@ body::-webkit-scrollbar-thumb {
 
 @media (min-width: 768px) {
   html {
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory;
   }
 }
 
@@ -93,15 +93,10 @@ body::-webkit-scrollbar-thumb {
 
   .stage-frame {
     width: 100%;
-    min-height: calc(100vh - 5.5rem);
   }
 
   .stage-panel {
     @apply relative rounded-[32px] border;
-  }
-
-  .stage-frame--flow {
-    min-height: 0;
   }
 
   .stage-panel--dark {
@@ -143,5 +138,6 @@ body::-webkit-scrollbar-thumb {
 @media (min-width: 768px) {
   .stage-frame {
     width: min(92vw, 1600px);
+    height: 100%;
   }
 }

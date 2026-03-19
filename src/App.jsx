@@ -148,17 +148,13 @@ function SectionRule({ label, tone = 'dark' }) {
   );
 }
 
-function SlideSection({ id, mode = 'light', layout = 'compact', children }) {
+function SlideSection({ id, mode = 'light', children }) {
   return (
-    <section id={id} tabIndex={-1} className="relative snap-start px-3 pb-24 pt-3 md:px-6 md:py-6 lg:px-8 lg:py-8">
-      <div className={cx(
-        'mx-auto max-w-[1680px]',
-        layout === 'compact' ? 'flex min-h-[calc(100vh-1.5rem)] items-center justify-center' : 'flex justify-center'
-      )}>
+    <section id={id} tabIndex={-1} className="relative snap-start snap-always px-3 pb-24 pt-3 md:px-6 md:py-6 lg:h-[100svh] lg:min-h-[100svh] lg:overflow-hidden lg:px-8 lg:py-6">
+      <div className="mx-auto flex h-full max-w-[1680px] items-stretch justify-center">
         <div
           className={cx(
             'stage-frame stage-panel flex flex-col',
-            layout === 'flow' && 'stage-frame--flow',
             mode === 'dark' ? 'stage-panel--dark text-white' : 'stage-panel--light text-[var(--navy)]'
           )}
         >
@@ -208,7 +204,7 @@ function StoryVisual({ story }) {
 
 function StorySection({ story, reverse = false }) {
   return (
-    <SlideSection id={story.id} mode="dark" layout="flow">
+    <SlideSection id={story.id} mode="dark">
       <div className="grid h-full gap-6 md:grid-cols-12 md:gap-8">
         <div className={cx('md:col-span-5', reverse && 'md:order-2')}>
           <StoryVisual story={story} />
@@ -789,7 +785,7 @@ export default function App() {
         </SlideSection>
 
         {/* 2. Early momentum / metrics */}
-        <SlideSection id="evidence-outcomes" mode="light" layout="flow">
+        <SlideSection id="evidence-outcomes" mode="light">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-4">
               <div>
@@ -831,7 +827,7 @@ export default function App() {
         ))}
 
         {/* 8. Mentor network */}
-        <SlideSection id="mentor-network" mode="light" layout="flow">
+        <SlideSection id="mentor-network" mode="light">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-4">
               <div>
@@ -870,7 +866,7 @@ export default function App() {
         </SlideSection>
 
         {/* 9. Access gap */}
-        <SlideSection id="access-gap" mode="light" layout="flow">
+        <SlideSection id="access-gap" mode="light">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="md:col-span-6">
               <SectionRule label="Program overview and purpose" tone="light" />
@@ -926,7 +922,7 @@ export default function App() {
         </SlideSection>
 
         {/* 10. Ecosystem role */}
-        <SlideSection id="ecosystem-role" mode="light" layout="flow">
+        <SlideSection id="ecosystem-role" mode="light">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-5">
               <div>
@@ -990,7 +986,7 @@ export default function App() {
         </SlideSection>
 
         {/* 11. Community */}
-        <SlideSection id="community-support" mode="light" layout="flow">
+        <SlideSection id="community-support" mode="light">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-6">
               <div>
