@@ -3,13 +3,16 @@ export const anchorLine =
 
 export const sectionMeta = [
   { id: 'opening', nav: 'Opening', title: 'Title frame' },
+  { id: 'evidence-outcomes', nav: 'Outcomes', title: 'Early momentum' },
+  { id: 'story-simpleview', nav: 'SimpleView', title: 'Sushant Jain' },
+  { id: 'story-questify', nav: 'Questify', title: 'Vinod & Kamal' },
+  { id: 'story-bookmytherapy', nav: 'BookMyTherapy', title: 'Neha Juwale' },
+  { id: 'story-synoris', nav: 'Synoris', title: 'Inderjeet Singh' },
+  { id: 'story-enabled-talent', nav: 'Enabled Talent', title: 'Amandeep Singh' },
+  { id: 'mentor-network', nav: 'Mentors', title: 'Hands-on support model' },
   { id: 'access-gap', nav: 'Access gap', title: 'Structural gap in access' },
-  { id: 'ecosystem-role', nav: 'Ecosystem role', title: 'Infrastructure, not only programming' },
-  { id: 'story-simpleview', nav: 'Founder story', title: 'SimpleView' },
-  { id: 'mentor-network', nav: 'Mentor network', title: 'Hands-on support model' },
-  { id: 'story-aishar', nav: 'Founder story', title: 'AISHAR' },
+  { id: 'ecosystem-role', nav: 'Ecosystem', title: 'Infrastructure, not only programming' },
   { id: 'community-support', nav: 'Community', title: 'Belonging and family support' },
-  { id: 'evidence-outcomes', nav: 'Outcomes', title: 'Momentum in numbers' },
   { id: 'closing', nav: 'Closing', title: 'Future potential' },
 ];
 
@@ -87,7 +90,7 @@ export const stories = [
     company: 'SimpleView',
     companyTag: 'Chat-based data analytics platform',
     oneLiner:
-      'An IBM veteran saw a recurring problem: many SMEs had data, but not the internal capacity to turn it into useful insight.',
+      'An IBM veteran saw a recurring problem: many SMEs had data, but not the internal capacity to turn it into actionable insight.',
     whereTheyStarted:
       'SimpleView entered Brampton Next at the MVP stage, with the product concept established but the business model, sales motion, and strategic direction still needing refinement.',
     support: [
@@ -104,6 +107,105 @@ export const stories = [
     accent: 'LG and early revenue',
     visualTone: 'signal',
   },
+  {
+    id: 'story-questify',
+    label: 'Founder transformation / Cohort 3',
+    name: 'Vynavin Vinod & Madheswaran Kamal',
+    company: 'Questify',
+    companyTag: 'AI-powered EdTech platform transforming textbooks into short, personalized, scrollable learning videos',
+    oneLiner:
+      'Two co-founders set out to make learning more accessible by converting static textbooks into engaging, AI-generated video content.',
+    whereTheyStarted:
+      'Questify entered Brampton Next at the MVP stage, with a working product but a need for sharper positioning, pilot strategy, and investor narrative.',
+    support: [
+      'Refined product positioning and pilot strategy',
+      'Investor narrative development and pitch coaching',
+      'One-to-one mentorship and business guidance',
+      'Ecosystem introductions and network access',
+    ],
+    tractionTitle: 'Pilot, recognition, and early investment conversations',
+    tractionDetail:
+      'Secured a pilot with students in Peel District School Board, earned MindShare Learning Top 25 EdTech Companies of 2025, won the Diamond Challenge, and represented Canada at the Limitless World Summit.',
+    microProof: ['Peel District pilot', 'Top 25 EdTech 2025', 'Diamond Challenge win', 'Investment conversations'],
+    visualStat: 'MVP \u2192 pilot & recognition',
+    accent: 'MindShare Top 25',
+    visualTone: 'signal',
+  },
+  {
+    id: 'story-bookmytherapy',
+    label: 'Founder transformation / Cohort 3',
+    name: 'Neha Juwale',
+    company: 'BookMyTherapy',
+    companyTag: 'Culturally relevant mental-health access for immigrant communities',
+    oneLiner:
+      'A founder driven to close the gap between immigrant communities and culturally sensitive mental-health services.',
+    whereTheyStarted:
+      'BookMyTherapy entered BNext with a clear mission but needed to identify business model gaps, refine the revenue approach, and build a stronger go-to-market foundation.',
+    support: [
+      'Identified business model gaps and refined revenue approach',
+      'Business mentorship and strategic guidance',
+      'Pitch coaching and presentation preparation',
+      'Ecosystem connections and partnership introductions',
+    ],
+    tractionTitle: 'Partnerships, pitch, and recognition',
+    tractionDetail:
+      'Delivered a 1-minute pitch at graduation at Brampton City Hall, established partnerships with YMCA and Social Development Centre, and was recognized as Kitchener Waterloo Oktoberfest Woman of the Year 2024.',
+    microProof: ['YMCA partnership', 'Social Dev Centre partnership', 'City Hall pitch', 'KW Woman of the Year 2024'],
+    visualStat: 'Idea \u2192 partnerships',
+    accent: 'Woman of the Year 2024',
+    visualTone: 'community',
+  },
+  {
+    id: 'story-synoris',
+    label: 'Founder transformation / Cohort 3',
+    name: 'Inderjeet Singh',
+    company: 'Synoris',
+    companyTag: 'SaaS platform for smarter logistics operations',
+    oneLiner:
+      'A non-traditional, largely self-taught founder building technology to modernize logistics workflows.',
+    whereTheyStarted:
+      'Synoris entered BNext needing a stronger business model, clearer product positioning, and a sharper go-to-market strategy to move toward commercialization.',
+    support: [
+      'Refined business model and product positioning',
+      'Improved go-to-market strategy',
+      'Pitch sharpening and presentation readiness',
+      'Ecosystem connections and network access',
+    ],
+    tractionTitle: 'Accelerated toward commercialization',
+    tractionDetail:
+      'Through BNext support, Synoris refined its market approach and accelerated toward commercialization and growth.',
+    microProof: ['Business model refined', 'Go-to-market strategy', 'Pitch sharpened', 'Growth accelerated'],
+    visualStat: 'Idea \u2192 commercialization',
+    accent: 'Self-taught founder',
+    visualTone: 'logistics',
+  },
+  {
+    id: 'story-enabled-talent',
+    label: 'Founder impact story',
+    name: 'Amandeep Singh',
+    company: 'Enabled Talent',
+    companyTag: 'Inclusive employment solutions for people with disabilities',
+    oneLiner:
+      'Amandeep entered BNext early, before scaling revenue and operations, with a mission to transform how employers connect with talent who have disabilities.',
+    whereTheyStarted:
+      'Enabled Talent joined BNext at a foundational stage, needing end-to-end support from incorporation and business foundations through mentorship and strategic introductions.',
+    support: [
+      'End-to-end support from incorporation and business foundations',
+      'One-to-one mentorship and strategic guidance',
+      'Introductions to industry, post-secondary, and government stakeholders',
+      'Showcase opportunities including national leaders such as AI Minister Evan Solomon',
+    ],
+    tractionTitle: 'From Brampton to global scale',
+    tractionDetail:
+      'Launched in Brampton and expanded to multiple Canadian cities, then grew internationally through UNICEF Startup Lab in Africa and into Saudi Arabia, Qatar, and Europe. Reached 20,000+ users and earned multiple recognitions and awards.',
+    microProof: ['20,000+ users', 'UNICEF Startup Lab', 'International expansion', 'Multiple awards'],
+    visualStat: 'Local \u2192 global scale',
+    accent: '20,000+ users',
+    visualTone: 'scale',
+  },
+];
+
+export const reserveStories = [
   {
     id: 'story-aishar',
     label: 'Founder transformation / Cohort 2',
@@ -132,32 +234,32 @@ export const stories = [
 
 export const mentors = [
   {
-    name: 'Chetan Bhatia',
-    title: 'Storytelling and fundraising strategy',
+    name: 'Suvid Ajmera',
+    title: 'Fundraising strategy and investor relations',
     background:
-      'Co-founder of Honest Create with 14+ years across advertising, business development, product marketing, and strategic communications.',
+      'Experienced in angel investing, startup growth strategy, and helping founders build investor-ready businesses.',
     engagement:
-      'Worked directly with founders to refine narratives, strengthen pitch decks, and align messaging with investor expectations.',
+      'Worked directly with founders on fundraising strategy, investor relations, and positioning for growth capital.',
     impact:
-      'Founders gained clearer value propositions, stronger growth stories, and more confidence in fundraising conversations.',
+      'Founders developed stronger investor narratives, clearer fundraising plans, and more confidence engaging with capital partners.',
   },
   {
     name: 'Sabine MacDonald',
-    title: 'Leadership and international expansion',
+    title: 'Leadership development and international expansion',
     background:
       'International advisor, executive coach, and founder of The Sound of C with 20+ years of leadership experience across marketing, sales, and digital transformation.',
     engagement:
-      'Led one-to-one and group sessions on leadership effectiveness, global mindset, and growth across markets.',
+      'Led one-to-one and group sessions on leadership effectiveness, global mindset, and cross-cultural strategy for growth across markets.',
     impact:
       'Helped founders position themselves more confidently for international partnerships and cross-border growth.',
   },
   {
     name: 'Jaspreet Singh',
-    title: 'Financial strategy and tax planning',
+    title: 'Financial strategy and corporate structuring',
     background:
       'Founding Partner at Scale CPA with experience across audit, tax planning, business valuation, and advisory.',
     engagement:
-      'Advised founders on financial structure, tax efficiency, and scaling finance operations with investor readiness in mind.',
+      'Advised founders on financial structure, tax efficiency, corporate structuring, and scaling finance operations with investor readiness in mind.',
     impact:
       'Strengthened financial foundations and improved long-term decision-making as founders prepared to grow.',
   },
@@ -165,7 +267,7 @@ export const mentors = [
 
 export const mentorImpactSummary = [
   'Hands-on, high-engagement mentorship model',
-  'Expertise spanning storytelling, finance, leadership, and global expansion',
+  'Expertise spanning IP, finance, leadership, and global expansion',
   'Direct contribution to key business decisions',
   'Accelerated path from idea to traction',
 ];
@@ -202,12 +304,6 @@ export const communityQuotes = [
     attribution: 'Nikhil',
     role: 'BNext participant',
   },
-  {
-    quote:
-      'The BramptonNEXT program gave me the clarity, confidence, and push I needed to take CareO from just an idea to a validated pilot.',
-    attribution: 'Andaleeb Khan',
-    role: 'Founder, CareO Tech',
-  },
 ];
 
 export const metrics = [
@@ -219,18 +315,23 @@ export const metrics = [
   {
     value: 400,
     suffix: '+',
-    label: 'Hours of one-to-one mentorship delivered',
-    detail: 'High-touch guidance across business-critical decisions',
+    label: 'Hours of 1-to-1 mentorship delivered',
+    detail: 'High-touch guidance across key business decisions',
   },
   {
     value: 110,
     label: 'Workshops and training sessions',
-    detail: 'Including 30 delivered in Cohort 3',
+    detail: 'Across all cohorts, including 30 in Cohort 3',
+  },
+  {
+    value: 10,
+    label: 'Networking events',
+    detail: 'Connecting founders with the local ecosystem and business community',
   },
   {
     value: 200,
     suffix: '+',
-    label: 'Hours of settlement support delivered',
+    label: 'Hours of 1-to-1 settlement support delivered',
     detail: 'Business progress paired with real-life integration support',
   },
   {
@@ -238,24 +339,19 @@ export const metrics = [
     label: 'Family members supported',
     detail: 'Extending impact beyond the founder alone',
   },
-  {
-    value: 10,
-    label: 'Networking events',
-    detail: 'Connecting founders to the local ecosystem and business community',
-  },
 ];
 
 export const bramptonImpacts = [
   'Activating high-potential newcomer talent that might otherwise remain underutilized',
   'Helping founders establish businesses and long-term roots in Brampton',
-  'Strengthening the local innovation ecosystem through connection and participation',
+  'Strengthening the local innovation ecosystem through participation and connection',
   'Contributing to long-term economic growth and community development',
 ];
 
 export const closingParagraphs = [
-  'Over the past year, Brampton Next has demonstrated the value of a dedicated space where immigrant and internationally trained founders can access the mentorship, networks, and practical guidance needed to build businesses in Canada.',
-  'The momentum around the program points to a broader opportunity: when globally trained entrepreneurs connect with experienced mentors and ecosystem partners early, they are far more likely to turn ideas into companies that contribute to innovation, job creation, and regional economic growth.',
-  'With continued investment, Brampton Next is positioned to scale that impact and strengthen Brampton\u2019s role as a destination for globally trained entrepreneurs and inclusive innovation-driven growth.',
+  'Brampton Next has demonstrated the value of a dedicated space where immigrant and internationally trained founders can access the mentorship, networks, and practical guidance needed to build businesses in Canada.',
+  'Through mentorship, programming, and community engagement, founders are moving from ideas toward validated opportunities and real business traction.',
+  'The broader opportunity is ensuring that globally trained entrepreneurial potential is not lost to access barriers \u2014 and that Brampton Next continues to support full participation in the region\u2019s innovation economy.',
 ];
 
 export const closingMarkers = [

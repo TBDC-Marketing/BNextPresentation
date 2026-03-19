@@ -458,7 +458,7 @@ function NavigationControls({ sections, currentIndex, onNavigate, isOpen, onTogg
               </button>
             </div>
 
-            <div className="grid grid-cols-9 gap-1.5">
+            <div className="flex flex-wrap gap-1.5">
               {sections.map((section, index) => {
                 const state = index === currentIndex ? 'current' : index < currentIndex ? 'complete' : 'upcoming';
                 return (
@@ -655,75 +655,115 @@ export default function App() {
       <NavigationControls sections={sectionMeta} currentIndex={currentIndex} onNavigate={goToSection} isOpen={navOpen} onToggle={() => setNavOpen((v) => !v)} />
 
       <main>
+        {/* 1. Opening */}
         <SlideSection id="opening" mode="dark">
+          <div className="flex h-full flex-col justify-between">
+            <div>
+              <SectionRule label="BNext impact story" tone="dark" />
+              <h1 className="max-w-5xl font-display text-[clamp(4rem,9vw,9rem)] uppercase leading-[0.9] tracking-[-0.03em] text-white">
+                From potential to traction
+              </h1>
+              <p className="mt-6 max-w-3xl text-[clamp(1.15rem,1.5vw,1.4rem)] leading-8 text-white/75">
+                {anchorLine}
+              </p>
+            </div>
+
+            <div className="grid gap-3 pt-8 sm:grid-cols-3">
+              {openingPillars.map((pillar) => (
+                <div
+                  key={pillar.title}
+                  className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm"
+                >
+                  <p className="font-display text-[1.5rem] uppercase leading-none text-[var(--yellow)]">{pillar.title}</p>
+                  <p className="mt-3 text-sm leading-6 text-white/72">{pillar.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </SlideSection>
+
+        {/* 2. Early momentum / metrics */}
+        <SlideSection id="evidence-outcomes" mode="light" layout="flow">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
-            <div className="flex h-full flex-col justify-between md:col-span-7">
+            <div className="flex h-full flex-col justify-between md:col-span-4">
               <div>
-                <SectionRule label="BNext impact story" tone="dark" />
-                <h1 className="max-w-5xl font-display text-[clamp(4rem,9vw,9rem)] uppercase leading-[0.9] tracking-[-0.03em] text-white">
-                  From potential to traction
-                </h1>
-                <p className="mt-6 max-w-3xl text-[clamp(1.15rem,1.5vw,1.4rem)] leading-8 text-white/75">
-                  {anchorLine}
+                <SectionRule label="Evidence and outcomes" tone="light" />
+                <h2 className="max-w-2xl font-display text-[clamp(2.5rem,4.8vw,5rem)] uppercase leading-[0.92] tracking-[-0.03em] text-[var(--navy)]">
+                  Early momentum, made visible.
+                </h2>
+                <p className="mt-6 max-w-xl text-[clamp(1rem,1.12vw,1.08rem)] leading-8 text-[var(--navy)]/80">
+                  Early indicators show strong engagement, increasing demand, and expanding participation across the BNext ecosystem. The numbers matter because they point to founder progress, ecosystem activation, and a stronger regional pipeline.
                 </p>
               </div>
 
-              <div className="grid gap-3 pt-8 sm:grid-cols-3">
-                {openingPillars.map((pillar) => (
-                  <div
-                    key={pillar.title}
-                    className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm"
-                  >
-                    <p className="font-display text-[1.5rem] uppercase leading-none text-[var(--yellow)]">{pillar.title}</p>
-                    <p className="mt-3 text-sm leading-6 text-white/72">{pillar.body}</p>
-                  </div>
-                ))}
+              <div className="rounded-[28px] border border-[var(--navy)]/10 bg-[var(--navy)] p-6 text-white shadow-glow">
+                <p className="text-[0.72rem] uppercase tracking-[0.22em] text-white/50">What this means for Brampton</p>
+                <ul className="mt-4 space-y-3">
+                  {bramptonImpacts.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm leading-6 text-white/78">
+                      <HexMarker state="complete" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
-            <div className="md:col-span-5">
-              <div className="story-surface relative flex h-full min-h-[20rem] flex-col justify-between overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_14%,rgba(255,202,5,0.28),transparent_24%),radial-gradient(circle_at_22%_100%,rgba(244,132,36,0.18),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0)_42%)]" />
-
-                <div className="relative z-10 flex items-start justify-between gap-4">
-                  <Chip tone="dark">Presentation-ready</Chip>
-                  <span className="rounded-full border border-white/10 px-3 py-1 text-[0.68rem] uppercase tracking-[0.24em] text-white/55">
-                    9 sections
-                  </span>
-                </div>
-
-                <div className="relative z-10">
-                  <p className="text-[0.72rem] uppercase tracking-[0.24em] text-white/55">Narrative arc</p>
-                  <div className="mt-4 space-y-3">
-                    {[
-                      'Access gap and ecosystem role',
-                      'Founder transformations',
-                      'Mentor network and belonging',
-                      'Evidence, momentum, and future scale',
-                    ].map((item, index) => (
-                      <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
-                        <span className="mt-0.5 font-display text-[1.35rem] leading-none text-[var(--yellow)]">
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
-                        <span className="text-sm leading-6 text-white/78">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="relative z-10 flex flex-wrap items-center gap-3 text-[0.72rem] uppercase tracking-[0.22em] text-white/55">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1">
-                    <HexMarker state="current" />
-                    Scroll or present
-                  </span>
-                  <span className="text-white/25">&bull;</span>
-                  <span>Arrow keys supported</span>
-                </div>
+            <div className="md:col-span-8">
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {metrics.map((metric) => (
+                  <MetricCard key={`${metric.label}-${metric.value}`} metric={metric} prefersReducedMotion={prefersReducedMotion} />
+                ))}
               </div>
             </div>
           </div>
         </SlideSection>
 
+        {/* 3–7. Founder stories */}
+        {stories.map((story, index) => (
+          <StorySection key={story.id} story={story} reverse={index % 2 === 1} />
+        ))}
+
+        {/* 8. Mentor network */}
+        <SlideSection id="mentor-network" mode="light" layout="flow">
+          <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
+            <div className="flex h-full flex-col justify-between md:col-span-4">
+              <div>
+                <SectionRule label="Mentor network and support model" tone="light" />
+                <h2 className="max-w-2xl font-display text-[clamp(2.5rem,4.8vw,5rem)] uppercase leading-[0.92] tracking-[-0.03em] text-[var(--navy)]">
+                  Experienced operators, directly engaged.
+                </h2>
+                <p className="mt-6 max-w-xl text-[clamp(1rem,1.12vw,1.1rem)] leading-8 text-[var(--navy)]/80">
+                  Unlike programs built around limited advisory touchpoints, BNext connects founders to mentors who actively shape decisions, accelerate learning, and open doors to critical opportunities.
+                </p>
+              </div>
+
+              <div className="rounded-[28px] border border-[var(--navy)]/10 bg-[var(--soft-gray)]/70 p-6">
+                <p className="text-[0.72rem] uppercase tracking-[0.22em] text-[var(--orange)]">Mentor network impact</p>
+                <ul className="mt-4 space-y-3">
+                  {mentorImpactSummary.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-base leading-7 text-[var(--navy)]/80">
+                      <span className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full border border-[var(--orange)]/20 bg-[rgba(244,132,36,0.08)] text-[var(--orange)]">
+                        <ArrowIcon direction="right" />
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="md:col-span-8">
+              <div className="grid gap-4 lg:grid-cols-3">
+                {mentors.map((mentor) => (
+                  <MentorCard key={mentor.name} mentor={mentor} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </SlideSection>
+
+        {/* 9. Access gap */}
         <SlideSection id="access-gap" mode="light" layout="flow">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="md:col-span-6">
@@ -779,6 +819,7 @@ export default function App() {
           </div>
         </SlideSection>
 
+        {/* 10. Ecosystem role */}
         <SlideSection id="ecosystem-role" mode="light" layout="flow">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-5">
@@ -842,48 +883,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        <StorySection story={stories[0]} />
-
-        <SlideSection id="mentor-network" mode="light" layout="flow">
-          <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
-            <div className="flex h-full flex-col justify-between md:col-span-4">
-              <div>
-                <SectionRule label="Mentor network and support model" tone="light" />
-                <h2 className="max-w-2xl font-display text-[clamp(2.5rem,4.8vw,5rem)] uppercase leading-[0.92] tracking-[-0.03em] text-[var(--navy)]">
-                  Experienced operators, directly engaged.
-                </h2>
-                <p className="mt-6 max-w-xl text-[clamp(1rem,1.12vw,1.1rem)] leading-8 text-[var(--navy)]/80">
-                  Unlike programs built around limited advisory touchpoints, BNext connects founders to mentors who actively shape decisions, accelerate learning, and open doors to critical opportunities.
-                </p>
-              </div>
-
-              <div className="rounded-[28px] border border-[var(--navy)]/10 bg-[var(--soft-gray)]/70 p-6">
-                <p className="text-[0.72rem] uppercase tracking-[0.22em] text-[var(--orange)]">Mentor network impact</p>
-                <ul className="mt-4 space-y-3">
-                  {mentorImpactSummary.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-base leading-7 text-[var(--navy)]/80">
-                      <span className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full border border-[var(--orange)]/20 bg-[rgba(244,132,36,0.08)] text-[var(--orange)]">
-                        <ArrowIcon direction="right" />
-                      </span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="md:col-span-8">
-              <div className="grid gap-4 lg:grid-cols-3">
-                {mentors.map((mentor) => (
-                  <MentorCard key={mentor.name} mentor={mentor} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </SlideSection>
-
-        <StorySection story={stories[1]} reverse />
-
+        {/* 11. Community */}
         <SlideSection id="community-support" mode="light" layout="flow">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-6">
@@ -913,50 +913,14 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="mt-4 grid gap-4 lg:grid-cols-2">
+              <div className="mt-4">
                 <QuoteBlock {...communityQuotes[1]} compact />
-                <QuoteBlock {...communityQuotes[2]} compact />
               </div>
             </div>
           </div>
         </SlideSection>
 
-        <SlideSection id="evidence-outcomes" mode="light" layout="flow">
-          <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
-            <div className="flex h-full flex-col justify-between md:col-span-4">
-              <div>
-                <SectionRule label="Evidence and outcomes" tone="light" />
-                <h2 className="max-w-2xl font-display text-[clamp(2.5rem,4.8vw,5rem)] uppercase leading-[0.92] tracking-[-0.03em] text-[var(--navy)]">
-                  Early momentum, made visible.
-                </h2>
-                <p className="mt-6 max-w-xl text-[clamp(1rem,1.12vw,1.08rem)] leading-8 text-[var(--navy)]/80">
-                  Early indicators show strong engagement, increasing demand, and expanding participation across the BNext ecosystem. The numbers matter because they point to founder progress, ecosystem activation, and a stronger regional pipeline.
-                </p>
-              </div>
-
-              <div className="rounded-[28px] border border-[var(--navy)]/10 bg-[var(--navy)] p-6 text-white shadow-glow">
-                <p className="text-[0.72rem] uppercase tracking-[0.22em] text-white/50">What this means for Brampton</p>
-                <ul className="mt-4 space-y-3">
-                  {bramptonImpacts.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm leading-6 text-white/78">
-                      <HexMarker state="complete" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="md:col-span-8">
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {metrics.map((metric) => (
-                  <MetricCard key={`${metric.label}-${metric.value}`} metric={metric} prefersReducedMotion={prefersReducedMotion} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </SlideSection>
-
+        {/* 12. Closing */}
         <SlideSection id="closing" mode="dark">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-8">
