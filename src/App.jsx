@@ -900,7 +900,7 @@ export default function App() {
               <QuoteBlock {...communityQuotes[0]} />
             </div>
 
-            <div className="md:col-span-6">
+            <div className="flex flex-col md:col-span-6">
               <div className="grid gap-4 sm:grid-cols-2">
                 {communityContributions.map((item) => (
                   <article key={item.title} className="rounded-[26px] border border-[var(--navy)]/10 bg-white/80 p-5 shadow-panel">
@@ -913,7 +913,7 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="mt-4">
+              <div className="mt-4 flex-1 [&>blockquote]:h-full [&>blockquote]:flex [&>blockquote]:flex-col [&>blockquote]:justify-between">
                 <QuoteBlock {...communityQuotes[1]} compact />
               </div>
             </div>
