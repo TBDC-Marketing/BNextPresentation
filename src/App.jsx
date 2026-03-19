@@ -277,7 +277,7 @@ function StorySection({ story, reverse = false }) {
             <div className="flex h-full flex-col justify-between rounded-[24px] border border-[var(--yellow)]/20 bg-[linear-gradient(180deg,rgba(255,202,5,0.08),rgba(255,202,5,0.02)_38%,rgba(255,255,255,0.02)_100%)] p-5">
               <div>
                 <p className="text-[0.72rem] uppercase tracking-[0.22em] text-white/55">Progress</p>
-                <h3 className="mt-2 max-w-sm font-display text-[clamp(2.2rem,4vw,4.35rem)] uppercase leading-[0.94] text-[var(--yellow)]">
+                <h3 className="mt-2 font-display text-[clamp(1.8rem,3.2vw,3.2rem)] uppercase leading-[0.94] text-[var(--yellow)]">
                   {story.tractionTitle}
                 </h3>
                 <p className="mt-4 max-w-md text-base leading-7 text-white/85">{story.tractionDetail}</p>
