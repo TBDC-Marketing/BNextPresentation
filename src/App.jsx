@@ -148,6 +148,24 @@ function SectionRule({ label, tone = 'dark' }) {
   );
 }
 
+function SlideBrandRow() {
+  const base = import.meta.env.BASE_URL;
+  return (
+    <div className="flex flex-wrap items-center gap-6 md:gap-8">
+      <img
+        src={`${base}BNextLogo.png`}
+        alt="Brampton NEXT"
+        className="h-12 w-auto object-contain sm:h-16 md:h-20 lg:h-[7.5rem] xl:h-[9rem]"
+      />
+      <img
+        src={`${base}BHiveLogo.png`}
+        alt="BHive"
+        className="h-10 w-auto object-contain sm:h-14 md:h-[4.5rem] lg:h-[6.75rem] xl:h-[8.25rem]"
+      />
+    </div>
+  );
+}
+
 function SlideSection({ id, mode = 'light', children }) {
   return (
     <section id={id} tabIndex={-1} className="relative snap-start snap-always px-3 pb-24 pt-3 md:px-6 md:py-6 lg:h-[100svh] lg:min-h-[100svh] lg:overflow-hidden lg:px-8 lg:py-6">
@@ -759,16 +777,15 @@ export default function App() {
       <main>
         {/* 1. Opening */}
         <SlideSection id="opening" mode="dark">
-          <div className="flex h-full flex-col justify-between">
-            <div className="mb-6 flex flex-wrap items-center gap-6 md:gap-8">
-              <img src={`${import.meta.env.BASE_URL}BNextLogo.png`} alt="Brampton NEXT" className="h-10 md:h-12 w-auto object-contain" />
-              <img src={`${import.meta.env.BASE_URL}BHiveLogo.png`} alt="BHive" className="h-10 md:h-12 w-auto object-contain" />
-            </div>
+          <div className="flex h-full flex-col justify-between pt-4 md:pt-6 lg:pt-10">
             <div>
-              <SectionRule label="BNext impact story" tone="dark" />
-              <h1 className="max-w-5xl font-display text-[clamp(4rem,9vw,9rem)] uppercase leading-[0.9] tracking-[-0.03em] text-white">
-                From potential to traction
-              </h1>
+              <SlideBrandRow />
+              <div className="mt-8 md:mt-10 lg:mt-12">
+                <SectionRule label="BNext impact story" tone="dark" />
+                <h1 className="max-w-5xl font-display text-[clamp(4rem,9vw,9rem)] uppercase leading-[0.9] tracking-[-0.03em] text-white">
+                  From potential to traction
+                </h1>
+              </div>
               <p className="mt-8 max-w-4xl text-[clamp(1.25rem,2vw,1.75rem)] leading-9 text-white/75">
                 {anchorLine}
               </p>
@@ -1028,17 +1045,16 @@ export default function App() {
 
         {/* 12. Closing */}
         <SlideSection id="closing" mode="dark">
-          <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
+          <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8 pt-4 md:pt-6 lg:pt-10">
             <div className="flex h-full flex-col justify-between md:col-span-8">
               <div>
-                <div className="mb-6 flex flex-wrap items-center gap-6 md:gap-8">
-                  <img src={`${import.meta.env.BASE_URL}BNextLogo.png`} alt="Brampton NEXT" className="h-10 md:h-12 w-auto object-contain" />
-                  <img src={`${import.meta.env.BASE_URL}BHiveLogo.png`} alt="BHive" className="h-10 md:h-12 w-auto object-contain" />
+                <SlideBrandRow />
+                <div className="mt-8 md:mt-10 lg:mt-12">
+                  <SectionRule label="Momentum and future potential" tone="dark" />
+                  <h2 className="max-w-5xl font-display text-[clamp(3rem,6.5vw,7rem)] uppercase leading-[0.9] tracking-[-0.03em] text-white">
+                    Access can change what happens next.
+                  </h2>
                 </div>
-                <SectionRule label="Momentum and future potential" tone="dark" />
-                <h2 className="max-w-5xl font-display text-[clamp(3rem,6.5vw,7rem)] uppercase leading-[0.9] tracking-[-0.03em] text-white">
-                  Access can change what happens next.
-                </h2>
 
                 <div className="mt-6 max-w-3xl space-y-4 text-[clamp(1.05rem,1.2vw,1.15rem)] leading-8 text-white/78">
                   {closingParagraphs.map((paragraph) => (
