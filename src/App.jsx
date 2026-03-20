@@ -139,9 +139,9 @@ function Chip({ children, tone = 'dark' }) {
   );
 }
 
-function SectionRule({ label, tone = 'dark' }) {
+function SectionRule({ label, tone = 'dark', compact = false }) {
   return (
-    <div className="mb-8 flex items-center gap-4 md:mb-10">
+    <div className={cx('flex items-center gap-4', compact ? 'mb-2' : 'mb-8 md:mb-10')}>
       <Chip tone={tone}>{label}</Chip>
       <div className={cx('h-px flex-1', tone === 'dark' ? 'bg-white/15' : 'bg-[var(--navy)]/10')} />
     </div>
@@ -166,9 +166,16 @@ function SlideBrandRow() {
   );
 }
 
-function SlideSection({ id, mode = 'light', children }) {
+function SlideSection({ id, mode = 'light', compact = false, noOverflowHidden = false, children }) {
   return (
-    <section id={id} tabIndex={-1} className="relative snap-start snap-always px-3 pb-24 pt-3 md:px-6 md:py-6 lg:h-[100svh] lg:min-h-[100svh] lg:overflow-hidden lg:px-8 lg:py-6">
+    <section
+      id={id}
+      tabIndex={-1}
+      className={cx(
+        'relative snap-start snap-always px-3 pb-24 pt-3 md:px-6 md:py-6 lg:h-[100svh] lg:min-h-[100svh] lg:px-8 lg:py-6',
+        !noOverflowHidden && 'lg:overflow-hidden'
+      )}
+    >
       <div className="mx-auto flex h-full max-w-[1680px] items-stretch justify-center">
         <div
           className={cx(
@@ -176,7 +183,14 @@ function SlideSection({ id, mode = 'light', children }) {
             mode === 'dark' ? 'stage-panel--dark text-white' : 'stage-panel--light text-[var(--navy)]'
           )}
         >
-          <div className="relative z-10 flex-1 p-6 md:p-10 lg:p-14">{children}</div>
+          <div
+            className={cx(
+              'relative z-10 flex-1',
+              compact ? 'p-4 md:p-6 lg:p-8' : 'p-6 md:p-10 lg:p-14'
+            )}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </section>
@@ -776,31 +790,39 @@ export default function App() {
 
       <main>
         {/* 1. Opening */}
-        <SlideSection id="opening" mode="dark">
-          <div className="flex h-full flex-col justify-between pt-4 md:pt-6 lg:pt-10">
-            <div>
+        <SlideSection id="opening" mode="dark" compact noOverflowHidden>
+          <div className="flex h-full flex-col">
+            {/* Compact header: logos + eyebrow */}
+            <div className="flex-none">
               <SlideBrandRow />
-              <div className="mt-8 md:mt-10 lg:mt-12">
-                <SectionRule label="BNext impact story" tone="dark" />
-                <h1 className="max-w-5xl font-display text-[clamp(4rem,9vw,9rem)] uppercase leading-[0.9] tracking-[-0.03em] text-white">
-                  From potential to traction
-                </h1>
+              <div className="mt-2 lg:mt-3">
+                <SectionRule label="BNext impact story" tone="dark" compact />
               </div>
-              <p className="mt-8 max-w-4xl text-[clamp(1.25rem,2vw,1.75rem)] leading-9 text-white/75">
+            </div>
+
+            {/* Flexible main: headline + body */}
+            <div className="flex min-h-0 flex-1 flex-col">
+              <h1 className="mt-3 flex-none font-display text-[clamp(2.75rem,5.5vw,5.5rem)] uppercase leading-[0.88] tracking-[-0.03em] text-white lg:mt-4">
+                From potential to traction
+              </h1>
+              <p className="mt-3 max-w-2xl flex-1 text-[clamp(1rem,1.35vw,1.2rem)] leading-[1.4] text-white/75 lg:mt-4">
                 {anchorLine}
               </p>
             </div>
 
-            <div className="grid gap-4 pt-8 sm:grid-cols-3">
-              {openingPillars.map((pillar) => (
-                <div
-                  key={pillar.title}
-                  className="rounded-[22px] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm"
-                >
-                  <p className="font-display text-[clamp(1.5rem,2.5vw,2rem)] uppercase leading-none text-[var(--yellow)]">{pillar.title}</p>
-                  <p className="mt-4 text-[clamp(0.9rem,1.1vw,1.05rem)] leading-7 text-white/72">{pillar.body}</p>
-                </div>
-              ))}
+            {/* Compact bottom: 3 cards */}
+            <div className="mt-3 flex-none sm:mt-4">
+              <div className="grid gap-3 sm:grid-cols-3">
+                {openingPillars.map((pillar) => (
+                  <div
+                    key={pillar.title}
+                    className="rounded-xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm"
+                  >
+                    <p className="font-display text-[clamp(1.15rem,1.8vw,1.35rem)] uppercase leading-none text-[var(--yellow)]">{pillar.title}</p>
+                    <p className="mt-2 text-[clamp(0.8rem,0.95vw,0.9rem)] leading-[1.35] text-white/72">{pillar.body}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </SlideSection>
@@ -1044,45 +1066,53 @@ export default function App() {
         </SlideSection>
 
         {/* 12. Closing */}
-        <SlideSection id="closing" mode="dark">
-          <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8 pt-4 md:pt-6 lg:pt-10">
-            <div className="flex h-full flex-col justify-between md:col-span-8">
-              <div>
+        <SlideSection id="closing" mode="dark" compact noOverflowHidden>
+          <div className="grid h-full min-h-0 gap-4 md:grid-cols-12 md:gap-6">
+            {/* Left column: 3 zones */}
+            <div className="flex min-h-0 flex-col md:col-span-8">
+              {/* Compact header */}
+              <div className="flex-none">
                 <SlideBrandRow />
-                <div className="mt-8 md:mt-10 lg:mt-12">
-                  <SectionRule label="Momentum and future potential" tone="dark" />
-                  <h2 className="max-w-5xl font-display text-[clamp(3rem,6.5vw,7rem)] uppercase leading-[0.9] tracking-[-0.03em] text-white">
-                    Access can change what happens next.
-                  </h2>
+                <div className="mt-2 lg:mt-3">
+                  <SectionRule label="Momentum and future potential" tone="dark" compact />
                 </div>
+              </div>
 
-                <div className="mt-6 max-w-3xl space-y-4 text-[clamp(1.05rem,1.2vw,1.15rem)] leading-8 text-white/78">
+              {/* Flexible main text */}
+              <div className="flex min-h-0 flex-1 flex-col">
+                <h2 className="mt-3 flex-none font-display text-[clamp(2.25rem,4.5vw,4.5rem)] uppercase leading-[0.88] tracking-[-0.03em] text-white lg:mt-4">
+                  Access can change what happens next.
+                </h2>
+                <div className="mt-3 flex-1 space-y-2 text-[clamp(0.9rem,1.05vw,1rem)] leading-[1.45] text-white/78 lg:mt-4">
                   {closingParagraphs.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
                 </div>
               </div>
 
-              <div className="grid gap-3 pt-8 sm:grid-cols-3">
-                {closingMarkers.map((marker) => (
-                  <div key={marker} className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 text-base leading-7 text-white/78">
-                    {marker}
-                  </div>
-                ))}
+              {/* Compact bottom cards */}
+              <div className="mt-3 flex-none sm:mt-4">
+                <div className="grid gap-2 sm:grid-cols-3">
+                  {closingMarkers.map((marker) => (
+                    <div key={marker} className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm leading-[1.4] text-white/78">
+                      {marker}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            <div className="md:col-span-4">
-              <div className="story-surface relative flex h-full min-h-[20rem] flex-col justify-between overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
+            {/* Right column: centered bounded closing card */}
+            <div className="flex items-center justify-center md:col-span-4">
+              <div className="story-surface relative w-full max-h-[18rem] flex flex-col justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-sm">
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_16%,rgba(255,202,5,0.28),transparent_24%),radial-gradient(circle_at_14%_100%,rgba(244,132,36,0.16),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0)_40%)]" />
                 <div className="relative z-10">
                   <Chip tone="dark">Closing frame</Chip>
-                  <p className="mt-5 text-[0.72rem] uppercase tracking-[0.22em] text-white/55">Regional significance</p>
-                  <p className="mt-3 font-display text-[clamp(2rem,4vw,3.3rem)] uppercase leading-[0.94] text-[var(--yellow)]">
+                  <p className="mt-3 text-[0.68rem] uppercase tracking-[0.22em] text-white/55">Regional significance</p>
+                  <p className="mt-2 font-display text-[clamp(1.5rem,2.5vw,2rem)] uppercase leading-[0.94] text-[var(--yellow)]">
                     Brampton Next helps globally trained founders fully participate in the region's innovation economy.
                   </p>
                 </div>
-
               </div>
             </div>
           </div>
