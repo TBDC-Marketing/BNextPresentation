@@ -234,6 +234,164 @@ function StoryVisual({ story }) {
   );
 }
 
+function StoryBreadcrumb() {
+  return (
+    <div className="flex flex-wrap items-center gap-3 text-[0.72rem] uppercase tracking-[0.2em] text-white/55">
+      <span className="inline-flex items-center gap-2">
+        <HexMarker state="complete" />
+        Idea
+      </span>
+      <span className="text-white/25">&rarr;</span>
+      <span className="inline-flex items-center gap-2">
+        <HexMarker state="current" />
+        Mentorship
+      </span>
+      <span className="text-white/25">&rarr;</span>
+      <span className="inline-flex items-center gap-2">
+        <HexMarker state="complete" />
+        Traction
+      </span>
+    </div>
+  );
+}
+
+/** Slide 4 (Questify): wide horizontal layout, single desktop viewport */
+function StoryVisualSlide4({ story }) {
+  return (
+    <div className="story-surface relative flex h-full min-h-0 flex-col overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-5 backdrop-blur-sm lg:p-6">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,202,5,0.18),transparent_24%),radial-gradient(circle_at_78%_18%,rgba(244,132,36,0.14),transparent_22%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0)_34%)]" />
+      <div className="relative z-10 flex flex-none items-start justify-between gap-4">
+        <Chip tone="dark">{story.accent}</Chip>
+        <span className="inline-flex shrink-0 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-[0.68rem] uppercase tracking-[0.22em] text-white/55">
+          {story.visualStat}
+        </span>
+      </div>
+
+      <div className="relative z-10 flex min-h-0 flex-1 flex-col justify-center py-2">
+        <div className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 font-display text-[clamp(4.5rem,8vw,8rem)] uppercase leading-none text-white/10">
+          {story.company.slice(0, 2)}
+        </div>
+        <div className="relative">
+          <p className="font-display text-[clamp(2.2rem,4vw,3.6rem)] uppercase leading-[0.92] text-white">{story.company}</p>
+          <p className="mt-2 max-w-none text-base text-white/75">{story.companyTag}</p>
+        </div>
+      </div>
+
+      <div className="relative z-10 grid flex-none grid-cols-2 gap-2">
+        {story.microProof.slice(0, 4).map((proof) => (
+          <div
+            key={proof}
+            className="rounded-2xl border border-white/10 bg-black/20 px-3 py-2.5 text-sm text-white/80"
+          >
+            {proof}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function StorySectionSlide4({ story }) {
+  return (
+    <SlideSection id={story.id} mode="dark" compact noOverflowHidden>
+      <div className="flex h-full min-h-0 flex-col">
+        {/* Row 1: compact header band */}
+        <div className="flex-none">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-6">
+            <div className="min-w-0 flex-1">
+              <SectionRule label={story.label} tone="dark" compact />
+            </div>
+            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-1 lg:shrink-0">
+              <StoryBreadcrumb />
+              <p className="text-base uppercase tracking-[0.2em] text-white/55">{story.name}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Row 2: main band */}
+        <div className="mt-3 flex min-h-0 flex-1 flex-col lg:mt-4">
+          <div className="grid h-full min-h-0 grid-cols-12 gap-4 lg:gap-5">
+            {/* Left working area col-span-7 */}
+            <div className="col-span-12 flex min-h-0 flex-col lg:col-span-7">
+              {/* Top band: title + description full width */}
+              <div className="flex-none">
+                <h2 className="font-display text-[clamp(2.8rem,6vw,5.8rem)] uppercase leading-[0.92] tracking-[-0.02em] text-white">
+                  {story.company}
+                </h2>
+                <p className="mt-3 max-w-none text-[clamp(1.1rem,1.45vw,1.35rem)] leading-7 text-white/80 lg:mt-4">
+                  {story.oneLiner}
+                </p>
+              </div>
+
+              {/* Bottom band: 12-col subgrid */}
+              <div className="mt-3 grid min-h-0 flex-1 grid-cols-12 gap-3 lg:mt-4 lg:gap-4">
+                {/* Support rail col-span-5 */}
+                <div className="col-span-12 flex min-h-0 flex-col lg:col-span-5">
+                  <div className="grid h-full min-h-0 grid-rows-[0.42fr_0.58fr] gap-3">
+                    <div className="flex min-h-0 flex-col overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
+                      <p className="mb-2 flex-none text-[0.72rem] uppercase tracking-[0.22em] text-white/55">
+                        Where they started
+                      </p>
+                      <p className="min-h-0 flex-1 text-base leading-7 text-white/85">{story.whereTheyStarted}</p>
+                    </div>
+                    <div className="flex min-h-0 flex-col overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
+                      <p className="mb-2 flex-none text-[0.72rem] uppercase tracking-[0.22em] text-white/55">
+                        How BNext supported them
+                      </p>
+                      <ul className="min-h-0 flex-1 space-y-2">
+                        {story.support.map((item) => (
+                          <li key={item} className="flex items-start gap-3 text-base leading-6 text-white/85">
+                            <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[var(--yellow)]/20 bg-[rgba(255,202,5,0.08)] text-[var(--yellow)]">
+                              <svg viewBox="0 0 100 86.6" className="h-3.5 w-3.5" aria-hidden="true">
+                                <polygon
+                                  points="25,1 75,1 99,43.3 75,85.6 25,85.6 1,43.3"
+                                  fill="currentColor"
+                                  opacity="0.95"
+                                />
+                              </svg>
+                            </span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Progress card col-span-7 */}
+                <div className="col-span-12 flex min-h-0 flex-col lg:col-span-7">
+                  <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[28px] border border-[var(--yellow)]/20 bg-[linear-gradient(180deg,rgba(255,202,5,0.08),rgba(255,202,5,0.02)_38%,rgba(255,255,255,0.02)_100%)] p-5 lg:p-6">
+                    <p className="flex-none text-[0.72rem] uppercase tracking-[0.22em] text-white/55">Progress</p>
+                    <h3 className="mt-2 flex-none font-display text-[clamp(1.8rem,3.2vw,3.2rem)] uppercase leading-[0.94] text-[var(--yellow)]">
+                      {story.tractionTitle}
+                    </h3>
+                    <p className="mt-3 min-h-0 flex-1 text-base leading-7 text-white/85">{story.tractionDetail}</p>
+                    <div className="mt-3 grid flex-none grid-cols-2 gap-2">
+                      {story.microProof.map((item) => (
+                        <div
+                          key={item}
+                          className="rounded-2xl border border-white/10 bg-black/20 px-3 py-2.5 text-sm text-white/80"
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right visual card col-span-5 */}
+            <div className="col-span-12 flex min-h-0 flex-col lg:col-span-5">
+              <StoryVisualSlide4 story={story} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </SlideSection>
+  );
+}
+
 function StorySection({ story, reverse = false }) {
   return (
     <SlideSection id={story.id} mode="dark">
@@ -877,9 +1035,13 @@ export default function App() {
         </SlideSection>
 
         {/* 3–7. Founder stories */}
-        {stories.map((story, index) => (
-          <StorySection key={story.id} story={story} reverse={index % 2 === 1} />
-        ))}
+        {stories.map((story, index) =>
+          story.id === 'story-questify' ? (
+            <StorySectionSlide4 key={story.id} story={story} />
+          ) : (
+            <StorySection key={story.id} story={story} reverse={index % 2 === 1} />
+          )
+        )}
 
         {/* 8. Mentor network */}
         <SlideSection id="mentor-network" mode="light">
