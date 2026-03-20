@@ -354,21 +354,33 @@ function MentorCard({ mentor }) {
   );
 }
 
-function QuoteBlock({ quote, attribution, role, compact = false }) {
+function QuoteBlock({ quote, attribution, role, compact = false, tight = false }) {
   return (
     <blockquote
       className={cx(
-        'overflow-hidden rounded-[28px] border border-white/10 bg-[var(--navy)] text-white',
-        compact ? 'p-5' : 'p-6 md:p-8'
+        'min-h-0 overflow-hidden rounded-[28px] border border-white/10 bg-[var(--navy)] text-white',
+        tight ? 'rounded-xl p-3 md:p-4' : compact ? 'p-5' : 'p-6 md:p-8'
       )}
     >
-      <div className="font-display text-[3rem] leading-none text-[var(--yellow)]">&ldquo;</div>
-      <p className={cx('mt-3 leading-tight text-white', compact ? 'text-[clamp(1.25rem,1.8vw,1.65rem)]' : 'text-[clamp(1.45rem,2.3vw,2.4rem)]')}>
+      <div
+        className={cx(
+          'font-display leading-none text-[var(--yellow)]',
+          tight ? 'text-2xl md:text-3xl' : 'text-[3rem]'
+        )}
+      >
+        &ldquo;
+      </div>
+      <p
+        className={cx(
+          'leading-snug text-white',
+          tight ? 'mt-1.5 text-[clamp(0.85rem,1.15vw,1.05rem)]' : compact ? 'mt-3 text-[clamp(1.25rem,1.8vw,1.65rem)]' : 'mt-3 text-[clamp(1.45rem,2.3vw,2.4rem)]'
+        )}
+      >
         {quote}
       </p>
-      <footer className="mt-6 border-t border-white/10 pt-4">
-        <p className="font-medium text-white">{attribution}</p>
-        <p className="mt-1 text-sm text-white/65">{role}</p>
+      <footer className={cx('border-t border-white/10', tight ? 'mt-2.5 pt-2' : 'mt-6 pt-4')}>
+        <p className={cx('font-medium text-white', tight && 'text-sm')}>{attribution}</p>
+        <p className={cx('text-white/65', tight ? 'mt-0.5 text-xs' : 'mt-1 text-sm')}>{role}</p>
       </footer>
     </blockquote>
   );
@@ -1029,37 +1041,44 @@ export default function App() {
         </SlideSection>
 
         {/* 11. Community */}
-        <SlideSection id="community-support" mode="light">
-          <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
-            <div className="flex h-full flex-col justify-between md:col-span-6">
-              <div>
-                <SectionRule label="Community and ecosystem engagement" tone="light" />
-                <h2 className="max-w-3xl font-display text-[clamp(2.7rem,5vw,5.2rem)] uppercase leading-[0.92] tracking-[-0.03em] text-[var(--navy)]">
+        <SlideSection id="community-support" mode="light" compact noOverflowHidden>
+          <div className="grid h-full min-h-0 grid-cols-1 gap-4 md:grid-cols-12 md:gap-5">
+            {/* Left: compact header + flexible quote */}
+            <div className="flex min-h-0 flex-col md:col-span-6">
+              <div className="flex-none">
+                <SectionRule label="Community and ecosystem engagement" tone="light" compact />
+                <h2 className="mt-3 max-w-3xl font-display text-[clamp(1.85rem,3.6vw,3.4rem)] uppercase leading-[0.88] tracking-[-0.03em] text-[var(--navy)] lg:mt-4">
                   Support extends beyond the startup itself.
                 </h2>
-                <p className="mt-6 max-w-2xl text-[clamp(1rem,1.15vw,1.12rem)] leading-8 text-[var(--navy)]/80">
+                <p className="mt-3 max-w-2xl text-[clamp(0.85rem,1.05vw,0.98rem)] leading-[1.45] text-[var(--navy)]/80 lg:mt-4">
                   Founders are not only building companies &mdash; they are navigating a new country, new systems, and new networks. By supporting both business development and day-to-day integration, BNext makes it easier to focus on long-term growth.
                 </p>
               </div>
-
-              <QuoteBlock {...communityQuotes[0]} />
+              <div className="mt-3 flex min-h-0 flex-1 flex-col md:mt-4">
+                <QuoteBlock {...communityQuotes[0]} tight />
+              </div>
             </div>
 
-            <div className="flex flex-col md:col-span-6">
-              <div className="grid gap-4 sm:grid-cols-2">
-                {communityContributions.map((item) => (
-                  <article key={item.title} className="rounded-[26px] border border-[var(--navy)]/10 bg-white/80 p-5 shadow-panel">
-                    <p className="text-[0.72rem] uppercase tracking-[0.22em] text-[var(--orange)]">Support layer</p>
-                    <h3 className="mt-3 font-display text-[1.8rem] uppercase leading-[0.94] text-[var(--navy)]">
-                      {item.title}
-                    </h3>
-                    <p className="mt-3 text-base leading-7 text-[var(--navy)]/78">{item.body}</p>
-                  </article>
-                ))}
+            {/* Right: compact grid + flexible quote */}
+            <div className="flex min-h-0 flex-col md:col-span-6">
+              <div className="flex-none">
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
+                  {communityContributions.map((item) => (
+                    <article
+                      key={item.title}
+                      className="rounded-xl border border-[var(--navy)]/10 bg-white/80 p-3 shadow-panel"
+                    >
+                      <p className="text-[0.62rem] uppercase tracking-[0.2em] text-[var(--orange)]">Support layer</p>
+                      <h3 className="mt-1.5 font-display text-[clamp(0.95rem,1.35vw,1.15rem)] uppercase leading-[0.95] text-[var(--navy)]">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1.5 text-[0.75rem] leading-[1.35] text-[var(--navy)]/78">{item.body}</p>
+                    </article>
+                  ))}
+                </div>
               </div>
-
-              <div className="mt-4 flex-1 [&>blockquote]:h-full [&>blockquote]:flex [&>blockquote]:flex-col [&>blockquote]:justify-between">
-                <QuoteBlock {...communityQuotes[1]} compact />
+              <div className="mt-3 flex min-h-0 flex-1 flex-col md:mt-4">
+                <QuoteBlock {...communityQuotes[1]} compact tight />
               </div>
             </div>
           </div>
