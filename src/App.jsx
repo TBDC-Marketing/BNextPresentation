@@ -218,14 +218,45 @@ function StoryBreadcrumb() {
   );
 }
 
-function FounderPhoto({ src, alt, company }) {
+function FounderPhotoPlaceholder({ name, company }) {
+  const initials = (name || '')
+    .split(/[\s&]+/)
+    .filter(Boolean)
+    .map((w) => w[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+
+  return (
+    <div className="relative flex h-full min-h-[20rem] items-center justify-center overflow-hidden rounded-[28px] bg-[var(--navy)]">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,202,5,0.12),transparent_50%)]" />
+      <span className="font-display text-[clamp(4rem,8vw,8rem)] uppercase leading-none text-white/10">
+        {initials}
+      </span>
+      <div className="absolute bottom-4 left-5 right-5 z-10">
+        <p className="font-display text-[clamp(1.4rem,2.2vw,2rem)] uppercase leading-none text-white/25">
+          {company}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function FounderPhoto({ src, alt, company, name }) {
   const base = import.meta.env.BASE_URL;
+  const [imgError, setImgError] = useState(false);
+
+  if (imgError || !src) {
+    return <FounderPhotoPlaceholder name={name} company={company} />;
+  }
+
   return (
     <div className="relative h-full min-h-[20rem] overflow-hidden rounded-[28px]">
       <img
         src={`${base}${src}`}
         alt={alt}
         className="absolute inset-0 h-full w-full object-cover object-top"
+        onError={() => setImgError(true)}
       />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,10,0.95)_0%,rgba(10,10,10,0.4)_35%,transparent_60%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,202,5,0.12),transparent_50%)]" />
@@ -254,6 +285,7 @@ function StorySlideRedesigned({ story }) {
                 src={story.founderPhoto}
                 alt={`${story.name}, founder of ${story.company}`}
                 company={story.company}
+                name={story.name}
               />
             </div>
 
@@ -266,41 +298,46 @@ function StorySlideRedesigned({ story }) {
                 <h2 className="mt-1 font-display text-[clamp(2.8rem,5.5vw,5.2rem)] uppercase leading-[0.90] tracking-[-0.02em] text-white">
                   {story.company}
                 </h2>
+                <p className="mt-2 text-[clamp(0.85rem,1vw,0.95rem)] uppercase tracking-[0.15em] text-white/35">
+                  {story.companyDescription}
+                </p>
               </div>
 
               <div className="mt-4 flex-none">
-                <p className="max-w-3xl text-[clamp(1.15rem,1.5vw,1.4rem)] leading-[1.55] text-[var(--yellow)]">
+                <p className="max-w-3xl text-[clamp(1.2rem,1.6vw,1.5rem)] leading-[1.5] text-[var(--yellow)]">
                   {story.pullQuote}
                 </p>
               </div>
 
-              <div className="mt-5 grid min-h-0 flex-1 grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="min-h-4 flex-1" />
 
-                <div className="flex flex-col overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
-                  <p className="mb-2 flex-none text-[0.72rem] uppercase tracking-[0.22em] text-white/40">
+              <div className="flex-none grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+                <div className="flex flex-col overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] p-6">
+                  <p className="mb-3 flex-none border-b border-white/8 pb-2 text-[0.78rem] uppercase tracking-[0.22em] text-white/40">
                     Then
                   </p>
-                  <p className="min-h-0 flex-1 text-base leading-7 text-white/70">
+                  <p className="min-h-0 flex-1 text-[clamp(1rem,1.15vw,1.15rem)] leading-[1.65] text-white/70">
                     {story.thenSnapshot}
                   </p>
                 </div>
 
-                <div className="flex flex-col overflow-hidden rounded-[24px] border border-[var(--yellow)]/25 bg-[linear-gradient(180deg,rgba(255,202,5,0.10),rgba(255,202,5,0.03)_40%,rgba(255,255,255,0.02))] p-5">
-                  <p className="mb-2 flex-none text-[0.72rem] uppercase tracking-[0.22em] text-[var(--yellow)]/70">
+                <div className="flex flex-col overflow-hidden rounded-[24px] border border-[var(--yellow)]/25 bg-[linear-gradient(180deg,rgba(255,202,5,0.10),rgba(255,202,5,0.03)_40%,rgba(255,255,255,0.02))] p-6">
+                  <p className="mb-3 flex-none border-b border-[var(--yellow)]/15 pb-2 text-[0.78rem] uppercase tracking-[0.22em] text-[var(--yellow)]/60">
                     Now
                   </p>
-                  <p className="min-h-0 flex-1 text-base leading-7 text-white/90">
+                  <p className="min-h-0 flex-1 text-[clamp(1rem,1.15vw,1.15rem)] leading-[1.65] text-white/90">
                     {story.nowSnapshot}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 flex-none">
+              <div className="mt-5 flex-none">
                 <div className="flex flex-wrap items-center gap-2">
                   {story.microProof.slice(0, 4).map((proof) => (
                     <div
                       key={proof}
-                      className="rounded-2xl border border-white/10 bg-black/20 px-3.5 py-2 text-sm text-white/75"
+                      className="rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-2.5 text-[0.9rem] font-medium text-white/80"
                     >
                       {proof}
                     </div>
@@ -867,12 +904,12 @@ export default function App() {
           </div>
         </SlideSection>
 
-        {/* 3–10. Founder stories */}
+        {/* 3–16. Founder stories */}
         {stories.map((story) => (
           <StorySlideRedesigned key={story.id} story={story} />
         ))}
 
-        {/* 11. Mentor network */}
+        {/* 17. Mentor network */}
         <SlideSection id="mentor-network" mode="light">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-4">
@@ -911,7 +948,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        {/* 12. Access gap */}
+        {/* 18. Access gap */}
         <SlideSection id="access-gap" mode="light">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="md:col-span-6">
@@ -967,7 +1004,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        {/* 13. Ecosystem role */}
+        {/* 19. Ecosystem role */}
         <SlideSection id="ecosystem-role" mode="light">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-5">
@@ -1031,7 +1068,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        {/* 14. Community */}
+        {/* 20. Community */}
         <SlideSection id="community-support" mode="light" compact noOverflowHidden>
           <div className="grid h-full min-h-0 grid-cols-1 gap-4 md:grid-cols-12 md:gap-5">
             {/* Left: compact header + flexible quote */}
@@ -1075,7 +1112,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        {/* 15. Closing */}
+        {/* 21. Closing */}
         <SlideSection id="closing" mode="dark" compact noOverflowHidden>
           <div className="grid h-full min-h-0 gap-4 md:grid-cols-12 md:gap-6">
             {/* Left column: 3 zones */}
