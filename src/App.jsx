@@ -197,43 +197,6 @@ function SlideSection({ id, mode = 'light', compact = false, noOverflowHidden = 
   );
 }
 
-function StoryVisual({ story }) {
-  return (
-    <div className="story-surface relative flex h-full min-h-[19rem] flex-col justify-between overflow-hidden rounded-[28px] border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,202,5,0.18),transparent_24%),radial-gradient(circle_at_78%_18%,rgba(244,132,36,0.14),transparent_22%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0)_34%)]" />
-      <div className="relative z-10 flex items-start justify-between gap-4">
-        <Chip tone="dark">{story.accent}</Chip>
-        <span className="inline-flex rounded-full border border-white/10 bg-black/20 px-3 py-1 text-[0.68rem] uppercase tracking-[0.22em] text-white/55">
-          {story.visualStat}
-        </span>
-      </div>
-
-      <div className="relative z-10">
-        <div className="pointer-events-none absolute -left-1 top-2 font-display text-[clamp(4.5rem,8vw,8rem)] uppercase leading-none text-white/10">
-          {story.company.slice(0, 2)}
-        </div>
-        <div className="relative pt-16">
-          <p className="font-display text-[clamp(2.2rem,4vw,3.6rem)] uppercase leading-[0.92] text-white">
-            {story.company}
-          </p>
-          <p className="mt-2 max-w-sm text-base text-white/75">{story.companyTag}</p>
-        </div>
-      </div>
-
-      <div className="relative z-10 grid gap-2 sm:grid-cols-2">
-        {story.microProof.slice(0, 4).map((proof) => (
-          <div
-            key={proof}
-            className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/80"
-          >
-            {proof}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function StoryBreadcrumb() {
   return (
     <div className="flex flex-wrap items-center gap-3 text-[0.72rem] uppercase tracking-[0.2em] text-white/55">
@@ -255,226 +218,96 @@ function StoryBreadcrumb() {
   );
 }
 
-/** Slide 4 (Questify): wide horizontal layout, single desktop viewport */
-function StoryVisualSlide4({ story }) {
+function FounderPhoto({ src, alt, company }) {
+  const base = import.meta.env.BASE_URL;
   return (
-    <div className="story-surface relative flex h-full min-h-0 flex-col overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-5 backdrop-blur-sm lg:p-6">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,202,5,0.18),transparent_24%),radial-gradient(circle_at_78%_18%,rgba(244,132,36,0.14),transparent_22%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0)_34%)]" />
-      <div className="relative z-10 flex flex-none items-start justify-between gap-4">
-        <Chip tone="dark">{story.accent}</Chip>
-        <span className="inline-flex shrink-0 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-[0.68rem] uppercase tracking-[0.22em] text-white/55">
-          {story.visualStat}
-        </span>
-      </div>
-
-      <div className="relative z-10 flex min-h-0 flex-1 flex-col justify-center py-2">
-        <div className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 font-display text-[clamp(4.5rem,8vw,8rem)] uppercase leading-none text-white/10">
-          {story.company.slice(0, 2)}
-        </div>
-        <div className="relative">
-          <p className="font-display text-[clamp(2.2rem,4vw,3.6rem)] uppercase leading-[0.92] text-white">{story.company}</p>
-          <p className="mt-2 max-w-none text-base text-white/75">{story.companyTag}</p>
-        </div>
-      </div>
-
-      <div className="relative z-10 grid flex-none grid-cols-2 gap-2">
-        {story.microProof.slice(0, 4).map((proof) => (
-          <div
-            key={proof}
-            className="rounded-2xl border border-white/10 bg-black/20 px-3 py-2.5 text-sm text-white/80"
-          >
-            {proof}
-          </div>
-        ))}
+    <div className="relative h-full min-h-[20rem] overflow-hidden rounded-[28px]">
+      <img
+        src={`${base}${src}`}
+        alt={alt}
+        className="absolute inset-0 h-full w-full object-cover object-top"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,10,0.95)_0%,rgba(10,10,10,0.4)_35%,transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,202,5,0.12),transparent_50%)]" />
+      <div className="absolute bottom-4 left-5 right-5 z-10">
+        <p className="font-display text-[clamp(1.4rem,2.2vw,2rem)] uppercase leading-none text-white/25">
+          {company}
+        </p>
       </div>
     </div>
   );
 }
 
-function StorySectionSlide4({ story }) {
+function StorySlideRedesigned({ story }) {
   return (
-    <SlideSection id={story.id} mode="dark" compact noOverflowHidden>
-      <div className="flex h-full min-h-0 flex-col">
-        {/* Row 1: compact header band */}
+    <SlideSection id={story.id} mode="dark">
+      <div className="flex h-full flex-col">
         <div className="flex-none">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-6">
-            <div className="min-w-0 flex-1">
-              <SectionRule label={story.label} tone="dark" compact />
-            </div>
-            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-1 lg:shrink-0">
-              <StoryBreadcrumb />
-              <p className="text-base uppercase tracking-[0.2em] text-white/55">{story.name}</p>
-            </div>
-          </div>
+          <SectionRule label={story.label} tone="dark" compact />
         </div>
 
-        {/* Row 2: main band */}
-        <div className="mt-3 flex min-h-0 flex-1 flex-col lg:mt-4">
-          <div className="grid h-full min-h-0 grid-cols-12 gap-4 lg:gap-5">
-            {/* Left working area col-span-7 */}
-            <div className="col-span-12 flex min-h-0 flex-col lg:col-span-7">
-              {/* Top band: title + description full width */}
+        <div className="mt-3 flex min-h-0 flex-1">
+          <div className="grid h-full w-full grid-cols-12 gap-5 lg:gap-6">
+
+            <div className="col-span-12 max-h-[14rem] lg:col-span-4 lg:max-h-none">
+              <FounderPhoto
+                src={story.founderPhoto}
+                alt={`${story.name}, founder of ${story.company}`}
+                company={story.company}
+              />
+            </div>
+
+            <div className="col-span-12 flex flex-col lg:col-span-8">
+
               <div className="flex-none">
-                <h2 className="font-display text-[clamp(2.8rem,6vw,5.8rem)] uppercase leading-[0.92] tracking-[-0.02em] text-white">
+                <p className="text-[0.78rem] uppercase tracking-[0.22em] text-white/50">
+                  {story.name}
+                </p>
+                <h2 className="mt-1 font-display text-[clamp(2.8rem,5.5vw,5.2rem)] uppercase leading-[0.90] tracking-[-0.02em] text-white">
                   {story.company}
                 </h2>
-                <p className="mt-3 max-w-none text-[clamp(1.1rem,1.45vw,1.35rem)] leading-7 text-white/80 lg:mt-4">
-                  {story.oneLiner}
+              </div>
+
+              <div className="mt-4 flex-none">
+                <p className="max-w-3xl text-[clamp(1.15rem,1.5vw,1.4rem)] leading-[1.55] text-[var(--yellow)]">
+                  {story.pullQuote}
                 </p>
               </div>
 
-              {/* Bottom band: 12-col subgrid */}
-              <div className="mt-3 grid min-h-0 flex-1 grid-cols-12 gap-3 lg:mt-4 lg:gap-4">
-                {/* Support rail col-span-5 */}
-                <div className="col-span-12 flex min-h-0 flex-col lg:col-span-5">
-                  <div className="grid h-full min-h-0 grid-rows-[0.42fr_0.58fr] gap-3">
-                    <div className="flex min-h-0 flex-col overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
-                      <p className="mb-2 flex-none text-[0.72rem] uppercase tracking-[0.22em] text-white/55">
-                        Where they started
-                      </p>
-                      <p className="min-h-0 flex-1 text-base leading-7 text-white/85">{story.whereTheyStarted}</p>
-                    </div>
-                    <div className="flex min-h-0 flex-col overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
-                      <p className="mb-2 flex-none text-[0.72rem] uppercase tracking-[0.22em] text-white/55">
-                        How BNext supported them
-                      </p>
-                      <ul className="min-h-0 flex-1 space-y-2">
-                        {story.support.map((item) => (
-                          <li key={item} className="flex items-start gap-3 text-base leading-6 text-white/85">
-                            <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[var(--yellow)]/20 bg-[rgba(255,202,5,0.08)] text-[var(--yellow)]">
-                              <svg viewBox="0 0 100 86.6" className="h-3.5 w-3.5" aria-hidden="true">
-                                <polygon
-                                  points="25,1 75,1 99,43.3 75,85.6 25,85.6 1,43.3"
-                                  fill="currentColor"
-                                  opacity="0.95"
-                                />
-                              </svg>
-                            </span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+              <div className="mt-5 grid min-h-0 flex-1 grid-cols-1 gap-4 sm:grid-cols-2">
+
+                <div className="flex flex-col overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
+                  <p className="mb-2 flex-none text-[0.72rem] uppercase tracking-[0.22em] text-white/40">
+                    Then
+                  </p>
+                  <p className="min-h-0 flex-1 text-base leading-7 text-white/70">
+                    {story.thenSnapshot}
+                  </p>
                 </div>
 
-                {/* Progress card col-span-7 */}
-                <div className="col-span-12 flex min-h-0 flex-col lg:col-span-7">
-                  <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[28px] border border-[var(--yellow)]/20 bg-[linear-gradient(180deg,rgba(255,202,5,0.08),rgba(255,202,5,0.02)_38%,rgba(255,255,255,0.02)_100%)] p-5 lg:p-6">
-                    <p className="flex-none text-[0.72rem] uppercase tracking-[0.22em] text-white/55">Progress</p>
-                    <h3 className="mt-2 flex-none font-display text-[clamp(1.8rem,3.2vw,3.2rem)] uppercase leading-[0.94] text-[var(--yellow)]">
-                      {story.tractionTitle}
-                    </h3>
-                    <p className="mt-3 min-h-0 flex-1 text-base leading-7 text-white/85">{story.tractionDetail}</p>
-                    <div className="mt-3 grid flex-none grid-cols-2 gap-2">
-                      {story.microProof.map((item) => (
-                        <div
-                          key={item}
-                          className="rounded-2xl border border-white/10 bg-black/20 px-3 py-2.5 text-sm text-white/80"
-                        >
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                <div className="flex flex-col overflow-hidden rounded-[24px] border border-[var(--yellow)]/25 bg-[linear-gradient(180deg,rgba(255,202,5,0.10),rgba(255,202,5,0.03)_40%,rgba(255,255,255,0.02))] p-5">
+                  <p className="mb-2 flex-none text-[0.72rem] uppercase tracking-[0.22em] text-[var(--yellow)]/70">
+                    Now
+                  </p>
+                  <p className="min-h-0 flex-1 text-base leading-7 text-white/90">
+                    {story.nowSnapshot}
+                  </p>
                 </div>
               </div>
-            </div>
 
-            {/* Right visual card col-span-5 */}
-            <div className="col-span-12 flex min-h-0 flex-col lg:col-span-5">
-              <StoryVisualSlide4 story={story} />
-            </div>
-          </div>
-        </div>
-      </div>
-    </SlideSection>
-  );
-}
-
-function StorySection({ story, reverse = false }) {
-  return (
-    <SlideSection id={story.id} mode="dark">
-      <div className="grid h-full gap-6 md:grid-cols-12 md:gap-8">
-        <div className={cx('md:col-span-5', reverse && 'md:order-2')}>
-          <StoryVisual story={story} />
-        </div>
-
-        <div className={cx('flex h-full flex-col justify-between md:col-span-7', reverse && 'md:order-1')}>
-          <div>
-            <SectionRule label={story.label} tone="dark" />
-
-            <div className="mb-6 flex flex-wrap items-center gap-3 text-[0.72rem] uppercase tracking-[0.2em] text-white/55">
-              <span className="inline-flex items-center gap-2">
-                <HexMarker state="complete" />
-                Idea
-              </span>
-              <span className="text-white/25">&rarr;</span>
-              <span className="inline-flex items-center gap-2">
-                <HexMarker state="current" />
-                Mentorship
-              </span>
-              <span className="text-white/25">&rarr;</span>
-              <span className="inline-flex items-center gap-2">
-                <HexMarker state="complete" />
-                Traction
-              </span>
-            </div>
-
-            <div className="max-w-4xl">
-              <p className="text-base uppercase tracking-[0.2em] text-white/55">{story.name}</p>
-              <h2 className="mt-2 font-display text-[clamp(2.8rem,6vw,5.8rem)] uppercase leading-[0.92] tracking-[-0.02em] text-white">
-                {story.company}
-              </h2>
-              <p className="mt-4 max-w-3xl text-[clamp(1.1rem,1.45vw,1.35rem)] leading-7 text-white/80">
-                {story.oneLiner}
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="space-y-4">
-              <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
-                <p className="mb-3 text-[0.72rem] uppercase tracking-[0.22em] text-white/55">Where they started</p>
-                <p className="max-w-2xl text-base leading-7 text-white/85">{story.whereTheyStarted}</p>
-              </div>
-
-              <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
-                <p className="mb-4 text-[0.72rem] uppercase tracking-[0.22em] text-white/55">How BNext supported them</p>
-                <ul className="space-y-3">
-                  {story.support.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-base leading-6 text-white/85">
-                      <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full border border-[var(--yellow)]/20 bg-[rgba(255,202,5,0.08)] text-[var(--yellow)]">
-                        <svg viewBox="0 0 100 86.6" className="h-3.5 w-3.5" aria-hidden="true">
-                          <polygon
-                            points="25,1 75,1 99,43.3 75,85.6 25,85.6 1,43.3"
-                            fill="currentColor"
-                            opacity="0.95"
-                          />
-                        </svg>
-                      </span>
-                      <span>{item}</span>
-                    </li>
+              <div className="mt-4 flex-none">
+                <div className="flex flex-wrap items-center gap-2">
+                  {story.microProof.slice(0, 4).map((proof) => (
+                    <div
+                      key={proof}
+                      className="rounded-2xl border border-white/10 bg-black/20 px-3.5 py-2 text-sm text-white/75"
+                    >
+                      {proof}
+                    </div>
                   ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="flex h-full flex-col justify-between rounded-[24px] border border-[var(--yellow)]/20 bg-[linear-gradient(180deg,rgba(255,202,5,0.08),rgba(255,202,5,0.02)_38%,rgba(255,255,255,0.02)_100%)] p-5">
-              <div>
-                <p className="text-[0.72rem] uppercase tracking-[0.22em] text-white/55">Progress</p>
-                <h3 className="mt-2 font-display text-[clamp(1.8rem,3.2vw,3.2rem)] uppercase leading-[0.94] text-[var(--yellow)]">
-                  {story.tractionTitle}
-                </h3>
-                <p className="mt-4 max-w-md text-base leading-7 text-white/85">{story.tractionDetail}</p>
-              </div>
-
-              <div className="mt-6 grid gap-2 sm:grid-cols-2">
-                {story.microProof.map((item) => (
-                  <div key={item} className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/80">
-                    {item}
-                  </div>
-                ))}
+                  <div className="mx-2 h-5 w-px bg-white/15" />
+                  <StoryBreadcrumb />
+                </div>
               </div>
             </div>
           </div>
@@ -1034,16 +867,12 @@ export default function App() {
           </div>
         </SlideSection>
 
-        {/* 3–7. Founder stories */}
-        {stories.map((story, index) =>
-          story.id === 'story-questify' ? (
-            <StorySectionSlide4 key={story.id} story={story} />
-          ) : (
-            <StorySection key={story.id} story={story} reverse={index % 2 === 1} />
-          )
-        )}
+        {/* 3–10. Founder stories */}
+        {stories.map((story) => (
+          <StorySlideRedesigned key={story.id} story={story} />
+        ))}
 
-        {/* 8. Mentor network */}
+        {/* 11. Mentor network */}
         <SlideSection id="mentor-network" mode="light">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-4">
@@ -1082,7 +911,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        {/* 9. Access gap */}
+        {/* 12. Access gap */}
         <SlideSection id="access-gap" mode="light">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="md:col-span-6">
@@ -1138,7 +967,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        {/* 10. Ecosystem role */}
+        {/* 13. Ecosystem role */}
         <SlideSection id="ecosystem-role" mode="light">
           <div className="grid h-full gap-8 md:grid-cols-12 md:gap-8">
             <div className="flex h-full flex-col justify-between md:col-span-5">
@@ -1202,7 +1031,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        {/* 11. Community */}
+        {/* 14. Community */}
         <SlideSection id="community-support" mode="light" compact noOverflowHidden>
           <div className="grid h-full min-h-0 grid-cols-1 gap-4 md:grid-cols-12 md:gap-5">
             {/* Left: compact header + flexible quote */}
@@ -1246,7 +1075,7 @@ export default function App() {
           </div>
         </SlideSection>
 
-        {/* 12. Closing */}
+        {/* 15. Closing */}
         <SlideSection id="closing" mode="dark" compact noOverflowHidden>
           <div className="grid h-full min-h-0 gap-4 md:grid-cols-12 md:gap-6">
             {/* Left column: 3 zones */}
